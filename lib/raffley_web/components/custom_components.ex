@@ -17,4 +17,23 @@ defmodule RaffleyWeb.CustomComponents do
     </div>
     """
   end
+
+  slot :inner_block, required: true
+  slot :details, required: true
+
+  def banner(assigns) do
+    assigns = assign(assigns, :emoji, ~w(😊 😃 😄) |> Enum.random())
+    assigns = assign(assigns, :name, "Geonwoo")
+
+    ~H"""
+    <div class="banner">
+      <h1>
+        {render_slot(@inner_block, @name)}
+      </h1>
+      <div :for={details <- @details} :if={details != []} class="details">
+        {render_slot(details, @emoji)}
+      </div>
+    </div>
+    """
+  end
 end
