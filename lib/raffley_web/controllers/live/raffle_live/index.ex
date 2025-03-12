@@ -37,7 +37,7 @@ defmodule RaffleyWeb.RaffleLive.Index do
 
   def filter_form(assigns) do
     ~H"""
-    <.form for={@form}>
+    <.form for={@form} id="filter-form" phx-change="filter">
       <.input field={@form[:q]} placeholder="Search..." autocomplete="off" />
       <.input
         type="select"
@@ -75,5 +75,14 @@ defmodule RaffleyWeb.RaffleLive.Index do
       </div>
     </.link>
     """
+  end
+
+  def handle_event("filter", params, socket) do
+    socket =
+      socket
+      |> assign(:form, to_form(params))
+      |> stream(:raffles, Raffles.filter_raffles(params), reset: true)
+
+    {:noreply, socket}
   end
 end
