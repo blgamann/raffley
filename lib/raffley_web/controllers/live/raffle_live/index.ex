@@ -38,7 +38,7 @@ defmodule RaffleyWeb.RaffleLive.Index do
   def filter_form(assigns) do
     ~H"""
     <.form for={@form} id="filter-form" phx-change="filter">
-      <.input field={@form[:q]} placeholder="Search..." autocomplete="off" />
+      <.input field={@form[:q]} placeholder="Search..." autocomplete="off" phx-debounce="1000" />
       <.input
         type="select"
         field={@form[:status]}
@@ -49,7 +49,11 @@ defmodule RaffleyWeb.RaffleLive.Index do
         type="select"
         field={@form[:sort_by]}
         prompt="Sort By"
-        options={[:prize, :ticket_price]}
+        options={[
+          Prize: "prize",
+          "Price: High to Low": "ticket_price_desc",
+          "Price: Low to High": "ticket_price_asc"
+        ]}
       />
     </.form>
     """
