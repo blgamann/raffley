@@ -30,9 +30,14 @@ defmodule RaffleyWeb.RaffleLive.Show do
         <section>
           <.badge status={@raffle.status} />
           <header>
-            <h2>
-              {@raffle.prize}
-            </h2>
+            <div>
+              <h2>
+                {@raffle.prize}
+              </h2>
+              <h3>
+                {@raffle.charity.name}
+              </h3>
+            </div>
             <div class="price">
               ${@raffle.ticket_price} / ticket
             </div>
@@ -45,14 +50,14 @@ defmodule RaffleyWeb.RaffleLive.Show do
       <div class="activity">
         <div class="left"></div>
         <div class="right">
-          <.featured_raffle_card raffles={@featured_raffles} />
+          <.featured_raffles raffles={@featured_raffles} />
         </div>
       </div>
     </div>
     """
   end
 
-  def featured_raffle_card(assigns) do
+  def featured_raffles(assigns) do
     ~H"""
     <section>
       <h4>Featured Raffles</h4>
