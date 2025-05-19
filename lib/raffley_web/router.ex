@@ -11,10 +11,18 @@ defmodule RaffleyWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :spy
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  def spy(conn, _opts) do
+    greeting = ~w(Ho Howdy Hello) |> Enum.random()
+    conn = assign(conn, :greeting, greeting)
+    IO.puts("Spying on conn: #{inspect(conn)}")
+    conn
   end
 
   scope "/", RaffleyWeb do
@@ -28,6 +36,10 @@ defmodule RaffleyWeb.Router do
     live "/estimator", EstimatorLive
     live "/raffles", RaffleLive.Index
     live "/raffles/:id", RaffleLive.Show
+  end
+
+  scope "/", RaffleyWeb do
+    pipe_through [:browser, :require_authenticated_user]
 
     live "/admin/raffles", AdminRaffleLive.Index
     live "/admin/raffles/new", AdminRaffleLive.Form, :new
