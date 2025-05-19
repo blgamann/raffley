@@ -1,7 +1,6 @@
 defmodule Raffley.Raffles do
   alias Raffley.Raffles.Raffle
   alias Raffley.Repo
-  alias Raffley.Charities.Charity
   import Ecto.Query
 
   def list_raffles do
@@ -32,7 +31,7 @@ defmodule Raffley.Raffles do
     from r in query, join: c in assoc(r, :charity), where: c.slug == ^slug
   end
 
-defp search_by(query, q) when q in ["", nil], do: query
+  defp search_by(query, q) when q in ["", nil], do: query
 
   defp search_by(query, q) do
     where(query, [r], ilike(r.prize, ^"%#{q}%"))
