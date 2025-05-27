@@ -6,7 +6,7 @@ defmodule Raffley.Tickets.Ticket do
     field :comment, :string
     field :price, :integer
 
-    belongs to :raffle, Raffley.Raffles.Raffle
+    belongs_to :raffle, Raffley.Raffles.Raffle
     belongs_to :user, Raffley.Accounts.User
 
     timestamps(type: :utc_datetime)
